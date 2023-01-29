@@ -8,6 +8,15 @@ const app = express();
 // app.use(express.json())
 // app.use(express.urlencoded({extended: false}))
 
+app.use((req, res, next)=>{
+    console.log(`Route: ${req.url} Metodo: ${req.method}`);
+    next()
+})
+
+app.get('/profile',(req, res)=>{
+    res.send('profile page')
+})
+
 app.get('/hello/:username', (req, res)=>{
     console.log(req.params.username);
     console.log(typeof req.params.username);
@@ -26,6 +35,20 @@ app.get('/nombre/:nombre/age/:age', (req, res)=>{
     console.log(req.params);
     res.send(`El usuario ${req.params.nombre} tiene ${req.params.age} annos` )
 }) 
+
+// Middleware
+
+app.use((req, res, next)=>{
+    if (req.query.login === "alex@gmail.com") {
+        next()        
+    } else {
+        res.send("No Autorizado")
+    }
+})
+
+app.get('/dashboard',(req, res)=>{
+    res.send('Dashboard page')
+})
 
 app.use((req, res)=>{
     res.status(404).send('No se encontro tu pagina')
