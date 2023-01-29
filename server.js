@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path')
+require('ejs')
 
 // const PORT = process.env.PORT || 3000;
 
@@ -13,6 +14,8 @@ const UserRoutes = require('./src/routes/users')
 app.set('case sentitive routing', true)
 app.set('appName', 'Express Course')
 app.set('port', 3000)
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, './src/views'))
 
 //middlewares
 app.use(morgan('dev'))
